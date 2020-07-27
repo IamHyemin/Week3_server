@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(bodyParser.json());
 
 // [CONFIGURE SERVER PORT]
-let port = process.env.PORT || 6060; // process.env.PORT가 0이면 7980
+let port = process.env.PORT || 7480; // process.env.PORT가 0이면 7980
 
 // [CONFIGURE mongoose]
 

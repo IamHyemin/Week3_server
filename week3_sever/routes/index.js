@@ -144,7 +144,7 @@ module.exports = function(app, User, Image, upload)
     app.put('/api/users/photoList/:user_id', function(req, res) {
 
         const userId = req.params.user_id;
-        const item = req.body.userphoto;
+        const item = req.body;
 
         // user_email을 가진 user의 friendsList에 friend_email 제거
         updateOneUser({id: userId}, {$addToSet: {'photolist': item}}, res);
@@ -167,6 +167,7 @@ module.exports = function(app, User, Image, upload)
     // 업로드 요청 처리
     app.post('/api/files/upload', upload.single("imgFile"),function(req, res) {
         const title = req.body.title;
+        const id = req.body.id;
         const fileObj = req.file; // multer 모듈 덕분에 사용 가능한 req의 field
         const saveFileName = fileObj.filename; // 저장된 파일명
         const size = fileObj.size;
@@ -174,6 +175,7 @@ module.exports = function(app, User, Image, upload)
         // 추출한 데이터들을 Object로 묶는다
         const obj = {
             "title": title,
+            "id" : id,
             "saveFileName": saveFileName,
             "size": size
         };
@@ -224,6 +226,7 @@ module.exports = function(app, User, Image, upload)
         }
 
     });
+
 
     // DB 상에 저장된, 파일의 메타데이터를 얻기 (메타 데이터가 DB에 있는 거임 파일은 서버의 로컬에 있음)
     app.get('/api/files/meta/:saveFileName', function(req, res) {
